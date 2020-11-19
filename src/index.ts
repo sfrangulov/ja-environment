@@ -1,39 +1,61 @@
-import Path from "path";
-import process from "process";
+import Environment from "./environment";
+import Helper from "./helper";
+import JsonFileProvider from "./providers/json-file";
 
-import jsonc from "jsonc";
-import { defaults } from "lodash/defaults";
-import { get } from "lodash/get";
+type Providers = JsonFileProvider;
 
-enum FileStates {
-    NotLoaded = 1,
-    Loaded,
-    NotFound
-  }
-
-interface File {
-    state: FileStates
+interface Params {
+  provider?: Providers;
 }
 
 class JAEnvironment {
-  private NODE_ENV: string = process.env.NODE_ENV
-    ? process.env.NODE_ENV
-    : "development";
-  private path: string;
-  private files:Map<unknown, File> = new Map();
+  private provider: Providers;
+  private environments: Map<unknown, Environment> = new Map();
 
-  constructor(path: string = Path.join(process.cwd(), "__environment__")) {
-    this.path = path;
-    this.files.set("default", { state: FileStates.NotLoaded, xxx: 1 });
-    this.files.set(this.nodeEnv(), { state: FileStates.NotLoaded });
+  constructor({ provider = new JsonFileProvider({}) }: Params) {
+    this.provider = provider;
   }
 
-  nodeEnv(): string {
-    return this.NODE_ENV;
+  async initAsync(): Promise<void> {
+    await this.provider.initAsync();
+    this.setEnvironments();
   }
 
-  get(path: string): any {
-    return this.path;
+  init(): void {
+    this.provider.init();
+    this.setEnvironments();
+  }
+
+  private setEnvironments(): void {
+    for (const [name, environment] of this.provider.environments) {
+      this.environments.set(name, new Environment(environment));
+    }
+  }
+
+  getNodeEnv(): string {
+    return Helper.getNodeEnv();
+  }
+
+  stat(): Array<unknown> {
+    return this.provider.stat();
+  }
+
+  has(path: string): boolean {
+    for (const [, environment] of this.environments) {
+      if (environment.has(path)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  get(path: string): unknown {
+    for (const [, environment] of this.environments) {
+      if (environment.has(path)) {
+        return environment.get(path);
+      }
+    }
+    return;
   }
 }
 
