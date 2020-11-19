@@ -2,7 +2,7 @@
   "name": "ja-environment",
   "description": "Just another environment manager",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -cw",
