@@ -11,7 +11,7 @@ export interface IEnvironment {
   name: string;
   state: EStates;
   data?: unknown; // Record<string, unknown> | Array<Record<string, unknown>>;
-  error: string;
+  error?: string;
 }
 
 export default class Environment implements IEnvironment {
