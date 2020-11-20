@@ -23,7 +23,7 @@ export default class Environment implements IEnvironment {
   constructor(environment: IEnvironment) {
     this.name = environment.name;
     this.state = environment.state;
-    this.data = environment.data ?? {};
+    this.data = environment.data || {}; // NOTE: ?? - не работает в nodejs 12
   }
 
   has(path: string): boolean {
