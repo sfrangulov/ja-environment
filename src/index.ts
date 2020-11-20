@@ -59,4 +59,8 @@ class JAEnvironment {
   }
 }
 
+export { JsonFileProvider };
+
+export { JAEnvironment };
+
 export default JAEnvironment;

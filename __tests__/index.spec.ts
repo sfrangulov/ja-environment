@@ -1,7 +1,6 @@
 import Path from "path";
 
-import JAEnvironment from "../src";
-import JsonFileProvider from "../src/providers/json-file";
+import { JAEnvironment, JsonFileProvider } from "../src";
 
 const provider = new JsonFileProvider({
   path: Path.join(process.cwd(), "__test_data__", "__environment__"),
