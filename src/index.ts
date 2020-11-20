@@ -49,10 +49,11 @@ class JAEnvironment {
     return false;
   }
 
-  get(path: string, defaultValue?: unknown): unknown {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get(path: string, defaultValue?: unknown, copy = true): any {
     for (const [, environment] of this.environments) {
       if (environment.has(path)) {
-        return environment.get(path);
+        return environment.get(path, copy);
       }
     }
     return defaultValue;

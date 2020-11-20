@@ -4,7 +4,7 @@ export enum EStates {
   NotLoaded = "NotLoaded",
   Loaded = "Loaded",
   NotFound = "NotFound",
-  Error = "Error"
+  Error = "Error",
 }
 
 export interface IEnvironment {
@@ -26,11 +26,16 @@ export default class Environment implements IEnvironment {
     this.data = environment.data || {}; // NOTE: ?? - не работает в nodejs 12
   }
 
+  private deepCopy(original) {
+    return JSON.parse(JSON.stringify(original));
+  }
+
   has(path: string): boolean {
     return hasIn(this.data, path);
   }
 
-  get(path: string): unknown {
-    return get(this.data, path);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  get(path: string, copy = true): any {
+    return copy ? this.deepCopy(get(this.data, path)) : get(this.data, path);
   }
 }

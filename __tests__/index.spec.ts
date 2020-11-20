@@ -61,7 +61,34 @@ describe("JAEnvironment", () => {
       expect(env.get("test", "default value for test")).toEqual("it is a test");
     });
     it("get('test_1', 'default value for test_1') equals to 'it is a test'", () => {
-      expect(env.get("test1", "default value for test1")).toEqual("default value for test1");
+      expect(env.get("test1", "default value for test1")).toEqual(
+        "default value for test1"
+      );
+    });
+    it("deepCopy() test", () => {
+      const value: Record<string, unknown> = env.get(
+        "level_1.level_2.level_3_1"
+      );
+      delete value.a;
+      value.c = "c";
+      expect(env.get("level_1.level_2.level_3_1")).toEqual({
+        a: "a",
+        b: "b",
+      });
+    });
+
+    it("disable deepCopy() test", () => {
+      const value: Record<string, unknown> = env.get(
+        "level_1.level_2.level_3_1",
+        undefined,
+        false
+      );
+      delete value.a;
+      value.c = "c";
+      expect(env.get("level_1.level_2.level_3_1")).toEqual({
+        b: "b",
+        c: "c",
+      });
     });
   });
 });
