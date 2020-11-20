@@ -1,7 +1,7 @@
 {
   "name": "ja-environment",
   "description": "Just another environment manager",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": false,
   "scripts": {
     "build": "rollup -c",

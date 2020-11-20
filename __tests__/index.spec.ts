@@ -57,5 +57,11 @@ describe("JAEnvironment", () => {
     it("get('default_2') equals to undefined'", () => {
       expect(env.get("default_2")).toEqual(undefined);
     });
+    it("get('test', 'default value for test') equals to 'it is a test'", () => {
+      expect(env.get("test", "default value for test")).toEqual("it is a test");
+    });
+    it("get('test_1', 'default value for test_1') equals to 'it is a test'", () => {
+      expect(env.get("test1", "default value for test1")).toEqual("default value for test1");
+    });
   });
 });

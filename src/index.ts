@@ -49,13 +49,13 @@ class JAEnvironment {
     return false;
   }
 
-  get(path: string): unknown {
+  get(path: string, defaultValue?: unknown): unknown {
     for (const [, environment] of this.environments) {
       if (environment.has(path)) {
         return environment.get(path);
       }
     }
-    return;
+    return defaultValue;
   }
 }
 
