@@ -1,4 +1,6 @@
-import { get, hasIn } from "lodash";
+
+import has from "lodash/has";
+import get from "lodash/get";
 
 export enum EStates {
   NotLoaded = "NotLoaded",
@@ -31,7 +33,7 @@ export default class Environment implements IEnvironment {
   }
 
   has(path: string): boolean {
-    return hasIn(this.data, path);
+    return has(this.data, path);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

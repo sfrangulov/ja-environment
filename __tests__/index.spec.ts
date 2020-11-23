@@ -1,6 +1,6 @@
 import Path from "path";
 
-import { JAEnvironment, JsonFileProvider } from "../src";
+import { JAEnvironment, JsonFileProvider, Encryptor } from "../src";
 
 const provider = new JsonFileProvider({
   path: Path.join(process.cwd(), "__test_data__", "__environment__"),
@@ -90,5 +90,16 @@ describe("JAEnvironment", () => {
         c: "c",
       });
     });
+  });
+});
+
+describe("Encryptor", () => {
+  it("encrypt/decrypt test", () => {
+    const encryptor = new Encryptor({
+      key: "1234567890123456",
+    });
+    expect(encryptor.decrypt(encryptor.encrypt(env.get("default")))).toEqual(
+      env.get("default")
+    );
   });
 });

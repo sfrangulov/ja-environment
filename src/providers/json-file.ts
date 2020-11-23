@@ -2,7 +2,7 @@ import Path from "path";
 import fs from "fs";
 import util from "util";
 
-import { jsonc } from "jsonc";
+import {  jsoncSafe } from "jsonc/lib/jsonc.safe";
 
 import BaseProvider from "./base-provider";
 import { EStates } from "../environment";
@@ -40,7 +40,7 @@ class JsonFileProvider extends BaseProvider {
       const file = fileByName(name);
       if (file) {
         try {
-          const data = await jsonc.safe.read(Path.join(this.path, file));
+          const data = await jsoncSafe.read(Path.join(this.path, file));
           environment.data = data;
           environment.state = EStates.Loaded;
         } catch (e) {
@@ -63,7 +63,7 @@ class JsonFileProvider extends BaseProvider {
     for (const [name, environment] of this.environments) {
       const file = fileByName(name);
       if (file) {
-        const [error, data] = jsonc.safe.readSync(Path.join(this.path, file));
+        const [error, data] = jsoncSafe.readSync(Path.join(this.path, file));
         if (error) {
           environment.state = EStates.Error;
           environment.error = error.message;
