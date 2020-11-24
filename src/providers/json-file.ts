@@ -86,7 +86,7 @@ class JsonFileProvider extends BaseProvider {
   private deleteDecryptedFiles() {
     const files = this.getFiles("decrypted");
     for (const file of files) {
-      //
+      fs.unlinkSync(Path.join(this.path, file));
     }
   }
 

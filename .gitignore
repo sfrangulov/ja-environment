@@ -9,3 +9,6 @@ yarn-error.log
 
 # lib
 lib
+
+__test_data__/__environment__/*.json
+__test_data__/__environment__/*.jsonc

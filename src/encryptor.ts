@@ -45,7 +45,7 @@ export default class Encryptor {
   }
 
   encrypt(value: string): string {
-    const iv = crypto.randomBytes(16);
+    const iv = Buffer.from("1234567890ABCDEF"); // crypto.randomBytes(16);
     const cipher = crypto.createCipheriv("aes-256-cbc", this.cryptoKey, iv);
     const encryptedValue =
       cipher.update(value, "utf8", "base64") + cipher.final("base64");
