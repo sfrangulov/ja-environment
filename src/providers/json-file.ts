@@ -8,7 +8,7 @@ import BaseProvider from "./base-provider";
 import { EStates } from "../environment";
 
 import Helper from "../helper";
-import { Encryptor } from "..";
+import Encryptor from "../encryptor";
 
 interface Params {
   path?: string;
