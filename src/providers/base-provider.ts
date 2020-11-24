@@ -1,3 +1,4 @@
+import { Encryptor } from "..";
 import { IEnvironment, EStates } from "../environment";
 import Helper from "../helper";
 
@@ -15,11 +16,7 @@ abstract class BaseProvider {
     });
   }
 
-  abstract async initAsync(): Promise<void>;
-
   abstract init(): void;
-
-  protected abstract async loadAsync(): Promise<void>;
 
   protected abstract load(): void;
 
@@ -27,13 +24,53 @@ abstract class BaseProvider {
     return this._environments;
   }
 
-  stat(): Array<unknown> {
+  status(): Array<unknown> {
     return Array.from(this._environments).map(([name, env]) => {
       return {
         name,
         state: env.state,
       };
     });
+  }
+
+  protected reviverEncrypt(encryptor: Encryptor) {
+    return function (key: string, value: string): unknown {
+      if (key[0] === "!") {
+        if (key.indexOf('!!') === 0) {
+          return encryptor.encrypt(JSON.stringify(value));
+        } else {
+          return encryptor.encrypt(value);
+        }
+      }
+      return value;
+    };
+  }
+
+  protected reviverDecrypt(encryptor: Encryptor) {
+    return function (key: string, value: string): unknown {
+      if (key[0] === "!") {
+        if (key.indexOf('!!') === 0) {
+          return JSON.parse(encryptor.decrypt(value));
+        } else {
+          return encryptor.decrypt(value);
+        }
+      }
+      return value;
+    };
+  }
+
+  protected reviverDecryptLoad(encryptor: Encryptor) {
+    return function (key: string, value: string): unknown {
+      if (key[0] === "!") {
+        if (key.indexOf('!!') === 0) {
+          this[key.substring(2)] = JSON.parse(encryptor.decrypt(value));
+        } else {
+          this[key.substring(1)] = encryptor.decrypt(value);
+        }
+        return;
+      }
+      return value;
+    };
   }
 }
 

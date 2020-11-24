@@ -1,13 +1,16 @@
 import Path from "path";
+import process from "process";
 
 import { JAEnvironment, JsonFileProvider, Encryptor } from "../src";
 
+process.env.ENV_SECRET = "janvironment1234"
+
 const provider = new JsonFileProvider({
-  path: Path.join(process.cwd(), "__test_data__", "__environment__"),
+  path: Path.join(process.cwd(), "__test_data__", "__environment__")
 });
 
 const env = new JAEnvironment({
-  provider,
+  provider
 });
 
 env.init();
@@ -17,8 +20,8 @@ describe("JAEnvironment", () => {
     it("NODE_ENV equals to 'test'", () => {
       expect(env.getNodeEnv()).toEqual("test");
     });
-    it("stat() returns that default and test environment is loaded", () => {
-      expect(env.stat()).toEqual([
+    it("status() returns that default and test environment is loaded", () => {
+      expect(env.status()).toEqual([
         { name: "test", state: "Loaded" },
         { name: "default", state: "Loaded" },
       ]);
@@ -94,12 +97,15 @@ describe("JAEnvironment", () => {
 });
 
 describe("Encryptor", () => {
-  it("encrypt/decrypt test", () => {
+  /*it("encrypt/decrypt test", () => {
     const encryptor = new Encryptor({
       key: "1234567890123456",
     });
     expect(encryptor.decrypt(encryptor.encrypt(env.get("default")))).toEqual(
       env.get("default")
     );
+  });*/
+  it("secret", () => {
+    expect(env.get("section.secret")).toEqual("secret");
   });
 });

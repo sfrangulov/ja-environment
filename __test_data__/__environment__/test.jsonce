@@ -1,0 +1,15 @@
+{
+  "test": "it is a test",
+  "level_1": {
+    "level_2": {
+      "level_3_1": {
+        "a": "a",
+        "b": "b"
+      },
+      "level_3_2": {
+        "!password": "10ce14bb3bdd5ca1ed04afe9841ce3b2ffabdbeb5f783211cd476d763c80e25054f267c25fcd1863d417b90545ee3900XK06v4kUOW2szzALVMr7kw=="
+      },
+      "!!object": "74f380d99d80833a0c7ea1f378cb6b3ffdde2dab3f67c584d629b6b1d1ffb9a494474846e9bd0a47f8bebc17723a4b08u8Jd21EMC5pD+lOVMKugow60qkvVeGaDZvv4+9yhtmM="
+    }
+  }
+}

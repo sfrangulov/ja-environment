@@ -12,13 +12,8 @@ export default class JAEnvironment {
   private provider: Providers;
   private environments: Map<unknown, Environment> = new Map();
 
-  constructor({ provider = new JsonFileProvider({}) }: Params) {
+  constructor({ provider = new JsonFileProvider({})}: Params) {
     this.provider = provider;
-  }
-
-  async initAsync(): Promise<void> {
-    await this.provider.initAsync();
-    this.setEnvironments();
   }
 
   init(): void {
@@ -36,8 +31,8 @@ export default class JAEnvironment {
     return Helper.getNodeEnv();
   }
 
-  stat(): Array<unknown> {
-    return this.provider.stat();
+  status(): Array<unknown> {
+    return this.provider.status();
   }
 
   has(path: string): boolean {
