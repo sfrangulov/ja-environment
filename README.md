@@ -46,6 +46,7 @@ Configuration files by default should be located in \_\_environment\_\_ folder w
 * development.json
 * test.json
 * any_other.json
+
 All files are optional
 
 You can automatically encrypt any key of json by add ! in key name.
